@@ -6,7 +6,13 @@
         android:id="@+id/menu_item_new_crime"
         android:icon="@drawable/ic_menu_add"
         android:title="@string/new_crime"
-        app:showAsAction="ifRoom|withText"/>
+        app:showAsAction="ifRoom"/>
+
+    <item
+        android:id="@+id/menu_item_delete_crime"
+        android:icon="@drawable/ic_menu_delete"
+        android:title="Delete Crime"
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/menu_item_show_subtitle"
