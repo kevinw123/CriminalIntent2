@@ -2,11 +2,16 @@ package com.bignerdranch.android.criminalintent;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,12 +22,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.text.format.DateFormat;
+
 import java.util.Date;
 import java.util.UUID;
-import android.provider.ContactsContract;
-import android.net.Uri;
-import android.database.Cursor;
 
 public class CrimeFragment extends Fragment {
 
@@ -151,6 +153,11 @@ public class CrimeFragment extends Fragment {
                 startActivity(i);
             }
         });
+
+        PackageManager packageManager = getActivity().getPackageManager();
+        if(packageManager.resolveActivity(pickContact, PackageManager.MATCH_DEFAULT_ONLY)== null){
+            mSuspectButton.setEnabled(false);
+        }
 
         return v;
     }
