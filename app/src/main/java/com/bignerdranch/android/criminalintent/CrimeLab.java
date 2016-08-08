@@ -1,16 +1,19 @@
 package com.bignerdranch.android.criminalintent;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
+
 import com.bignerdranch.android.criminalintent.database.CrimeBaseHelper;
 import com.bignerdranch.android.criminalintent.database.CrimeCursorWrapper;
-import com.bignerdranch.android.criminalintent.database.CrimeDbSchema;
 import com.bignerdranch.android.criminalintent.database.CrimeDbSchema.CrimeTable;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import android.database.sqlite.SQLiteDatabase;
-import android.content.ContentValues;
-import android.database.Cursor;
 
 public class CrimeLab {
     private static CrimeLab sCrimeLab;
@@ -38,7 +41,7 @@ public class CrimeLab {
 
     public void deleteCrime(Crime c){
         String uuidString = c.getId().toString();
-        mDatabase.delete(CrimeTable.NAME, CrimeTable.Cols.UUID + " = ?", new String[] {uuidString});
+        mDatabase.delete(CrimeTable.NAME, CrimeTable.Cols.UUID + " = ?", new String[]{uuidString});
     }
 
     public List<Crime> getCrimes() {
@@ -72,6 +75,13 @@ public class CrimeLab {
         }
     }
 
+    public File getPhotoFile(Crime crime){
+        File externalFilesDir = mContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        if(externalFilesDir == null){
+            return null;
+        }
+        return new File(externalFilesDir, crime.getPhotoFilename());
+    }
     public void updateCrime(Crime crime){
         String uuidString = crime.getId().toString();
         ContentValues values = getContentValues(crime);
